@@ -8,5 +8,6 @@ import { RestaurantModel } from './restaurant.model';
   imports: [TypeOrmModule.forFeature([RestaurantModel])],
   controllers: [RestaurantController],
   providers: [RestaurantService],
+  exports: [RestaurantService],
 })
 export class RestaurantModule {}

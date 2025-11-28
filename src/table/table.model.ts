@@ -1,16 +1,17 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { RestaurantModel } from '../restaurant/restaurant.model';
 import { ReserveModel } from '../reserve/reserve.model';
 
 @Entity()
-export class TableModel {
+export class TableModel extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 

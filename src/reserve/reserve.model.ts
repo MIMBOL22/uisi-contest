@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   ManyToOne,
@@ -7,7 +8,7 @@ import {
 import { TableModel } from '../table/table.model';
 
 @Entity()
-export class ReserveModel {
+export class ReserveModel extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 

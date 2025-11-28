@@ -14,6 +14,16 @@ export class RestaurantService {
     private restaurantRepository: Repository<RestaurantModel>,
   ) {}
 
+  async getByUUID(uuid: string) {
+    return await this.restaurantRepository.findOneBy({ uuid });
+  }
+
+  async checkSecretCode(uuid: string, secret_code: string): Promise<boolean> {
+    const restaurant = await this.getByUUID(uuid);
+    if (!restaurant) return false;
+    return await bcrypt.compare(secret_code, restaurant.admin_secret_code_hash);
+  }
+
   async create(
     inputData: CreateRestaurantInputDto,
   ): Promise<CreateRestaurantOutputDto> {
@@ -27,9 +37,9 @@ export class RestaurantService {
     const admin_secret = generateRandomString(32);
 
     const createdRestaurant = new RestaurantModel();
-    createdRestaurant.admin_secret_code_hash = bcrypt.hashSync(
+    createdRestaurant.admin_secret_code_hash = await bcrypt.hash(
       admin_secret,
-      bcrypt.genSaltSync(10),
+      await bcrypt.genSalt(10),
     );
     createdRestaurant.name = inputData.name;
     createdRestaurant.address = inputData.address;
